@@ -1,0 +1,66 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Expo
+.expo/
+.web/
+web-build/
+.expo-webpack/
+android/
+ios/
+# Expo web build output
+dist/
+
+# Misc
+.DS_Thumbs
+.env*
+.env
+.env.local
+.env.*.local
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
+
+# Hermes
+.hermes/
+hermes/
+.skills/
+skills/
+memories/
+.cache/
+.cache/
+logs/
+.sessions/
+.sessions/
+models_dev_cache.json
+ollama_cloud_models_cache.json
+provider_models_cache.json
+state.db
+state.db-shm
+state.db-wal
+gateway.state.json
+gateway.lock
+gateway.pid
+ channel_directory.json
+auth.json
+auth.lock
+.SOUL.md
+.skills_prompt_snapshot.json
+.gateway_state.json
+.channel_directory.json
+.provider_models_cache.json
+.models_dev_cache.json
+.ollama_cloud_models_cache.json
+.state.db
+.state.db-shm
+.state.db-wal
+.gateway_state.json
+.gateway.lock
+.gateway.pid
+.channel_directory.json
+.auth.json
+.auth.lock
