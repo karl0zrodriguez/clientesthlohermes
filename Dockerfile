@@ -1,3 +1,4 @@
+# Forzar reconstruccion
 FROM node:lts-alpine AS builder
 WORKDIR /app
 COPY package*.json ./
