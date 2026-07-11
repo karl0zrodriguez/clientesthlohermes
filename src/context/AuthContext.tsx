@@ -1,5 +1,5 @@
-import React, { createContext, useState, useCallback, ReactNode } from 'react';
-import { Google, useAuthRequest } from 'expo-auth-session';
+import React, { createContext, useState, useCallback, useContext, ReactNode } from 'react';
+import * as Google from 'expo-auth-session/providers/google';
 
 interface AuthContextType {
   accessToken: string | null;
@@ -16,10 +16,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [userName, setUserName] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [request, response, promptAsync] = useAuthRequest(
-    Google.createConfig({
-      expoClientId: '800981151261-3esmj8o7ed7mapbr8cns8dmc81gh9bql.apps.googleusercontent.com',
-    }),
+  const [request, response, promptAsync] = Google.useAuthRequest(
+    {
+      // For web, we use webClientId. The Google provider in expo-auth-session uses webClientId for web.
+      webClientId: '800981151261-3esmj8o7ed7mapbr8cns8dmc81gh9bql.apps.googleusercontent.com',
+    },
     {}
   );
 
@@ -63,6 +64,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       {children}
     </AuthContext.Provider>
   );
+};
+
+export const useAuthContext = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuthContext must be used within an AuthProvider');
+  }
+  return context;
 };
 
 export default AuthContext;

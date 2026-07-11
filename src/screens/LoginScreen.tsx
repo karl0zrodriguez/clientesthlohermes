@@ -11,7 +11,6 @@ export const LoginScreen = () => {
       <Button
         mode="contained"
         icon="login"
-        mode="contained"
         style={styles.button}
         onPress={login}
         disabled={isLoading}
