@@ -1,3 +1,4 @@
+# Limpieza de cache completa
 # Forzar reconstruccion
 FROM node:lts-alpine AS builder
 WORKDIR /app
