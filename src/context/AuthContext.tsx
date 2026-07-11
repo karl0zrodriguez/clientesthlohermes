@@ -16,12 +16,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [userName, setUserName] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [request, response, promptAsync] = Google.useAuthRequest(
+  const [request, response, promptAsync] = Google.useIdTokenAuthRequest(
     {
-      // For web, we use webClientId. The Google provider in expo-auth-session uses webClientId for web.
       webClientId: '800981151261-3esmj8o7ed7mapbr8cns8dmc81gh9bql.apps.googleusercontent.com',
-    },
-    {}
+      scopes: ['openid', 'profile', 'email'],
+    }
   );
 
   const login = useCallback(async () => {
@@ -30,14 +29,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const result = await promptAsync();
       if (result.type === 'success') {
         const { params } = result;
-        const accessToken = params.access_token;
         const idToken = params.id_token;
-        // We can decode the idToken to get user info (optional)
-        // For simplicity, we'll just store the access token and set a placeholder name
-        setAccessToken(accessToken);
-        // In a real app, you would fetch user profile using the access token
-        // For now, we'll set a placeholder
-        setUserName('Usuario de Google');
+        setAccessToken(idToken);
+        try {
+          const payload = JSON.parse(atob(idToken.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+          setUserName(payload.name || 'Usuario de Google');
+        } catch (e) {
+          console.error('Failed to decode ID token', e);
+          setUserName('Usuario de Google');
+        }
       }
     } catch (e) {
       console.error('Login error:', e);
